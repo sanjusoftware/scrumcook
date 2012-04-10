@@ -20,7 +20,7 @@
   <div class="row" id="controls_search_velocity_row">
     <div class="right clearfix">
       <% if view.eql? "project" %>
-          <%= link_to 'Import CSV', import_pivotal_csv_project_path(@project) %>
+          <%= link_to 'Import CSV', import_pivotal_csv_project_path(@project), :title => "Only for csv from Pivotal Tracker" %>
           <a href="#" id="add_new_story_control_button">Add Story +</a>
       <% end %>
 

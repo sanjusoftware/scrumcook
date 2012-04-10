@@ -43,7 +43,7 @@
                             :title => "Estimate: 0 points" %>
           <% end %>
           <% if story.description.present? or story.comments.present? or story.tasks.present? %>
-              <% img = story.story_attachments.present? ? "story_flyover_attachment_icon.png" : "story_flyover_icon.png" %>
+              <% img = story.story_attachments.present? ? "story_description_attachment.png" : "story_description.png" %>
               <%= image_tag(img, :alt => "Story type help", :class => "flyoverIcon helpIcon") %>
               <%= render :partial => 'stories/story_type_tooltip', :locals => {:id => item_unique_id} %>
           <% end %>
