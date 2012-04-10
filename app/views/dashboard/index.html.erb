@@ -42,7 +42,7 @@
                   </div>
                   <div class="main_details">
                     <h3 class="project_name">
-                      <%= link_to story_history.story.project.name, story_history.story.project %>
+                      <%= link_to truncate(story_history.story.project.name, :length => 63), story_history.story.project %>
                     </h3>
                     <span title="<%= story_history.event %>" class="activity_description">
                       <%= "#{story_history.user.email} #{truncate(story_history.event, :length => 23)}" %>

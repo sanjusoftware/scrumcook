@@ -736,4 +736,5 @@ input[type="submit"]:hover, input[type="button"]:hover {
     clear: both;
     text-align: center;
     padding-top: 10px;
+    padding-bottom: 10px;
 }
