@@ -39,14 +39,14 @@ class StoriesController < ApplicationController
   # PUT /stories/1.xml
   def update
     @pre_category = @story.category
-    params_req = params[:story] || params[@story.type.downcase]
-    @story.type = params_req[:type] || params_req[:type]
+    type = params[@story.type.downcase][:type]
+    @story.type = type
 
     respond_to do |format|
-      if @story.update_attributes(params_req)
+      if @story.update_attributes(params[@story.type.downcase])
         @story.update_status_change_history
         @message = "#{@story.type} was updated"
-        @story.story_attachments.reload
+        @story = Object.const_get(type).find(@story.id)
         format.js { render :template => 'stories/action_success' }
         format.html { redirect_to(project_url(@story.project), :notice => @story.type + ' was successfully updated.') }
         format.xml { head :ok }
