@@ -17,6 +17,7 @@
 //= require jquery.tools.min
 //= require highcharts
 //= require autoresize.jquery.min
+//= require jquery.scrollTo-1.4.2-min
 //= require_self
 //= require_tree .
 
@@ -144,6 +145,13 @@ function adjust_items_height() {
 
     $('.autoresize').autoResize({
         animate: false
+    });
+
+    $(document).delegate(".scroll_to", "click", function () {
+        var id = $(this).attr("id");
+        var item = $("#" + id.split('_')[0] + "_item_box");
+        $("#"+id.split('_')[1]+"_scrolling_item_list").scrollTo(item, {duration:100});
+        highlight_item($("#" + id.split('_')[0] + "_content"));
     });
 
     $(document).delegate(".closePanel", "click", function () {

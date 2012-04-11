@@ -129,17 +129,41 @@
           </label>
         </td>
       </tr>
-      <% if story.epic_id.present? %>
-          <tr>
-            <td colspan="4">
-              <div>
-                <%= "Epic is : #{story.epic.title}" %>
-              </div>
-            </td>
-          </tr>
-      <% end %>
       </tbody>
     </table>
+    <% if story.epic.present? %>
+        <div class="section">
+          <div class="header">
+            <div class="related_epic">Related Epic</div>
+          </div>
+          <div>
+            <table>
+              <tr>
+                <td><%= image_tag "epic.png" %></td>
+                <td><%= link_to story.epic.title, "#", :class => "scroll_to" , :id => "#{story.epic.id}_#{story.epic.category}" %></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+    <% elsif story.is_a?(Epic) %>
+        <div class="section">
+          <div class="header">
+            <div class="related_stories">Related Stories</div>
+          </div>
+          <div>
+            <table>
+              <% story.stories.each do |related_story| %>
+                  <tr>
+                    <td>
+                      <%= image_tag "#{related_story.type.downcase}.png" %>
+                    </td>
+                    <td><%= link_to related_story.title, "#", {:class => "scroll_to" , :id => "#{related_story.id}_#{related_story.category}"} %></td>
+                  </tr>
+              <% end %>
+            </table>
+          </div>
+        </div>
+    <% end %>
     <div class="section">
       <div class="header">
         <div class="label">Labels</div>
