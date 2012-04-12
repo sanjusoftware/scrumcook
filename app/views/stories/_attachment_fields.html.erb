@@ -1,5 +1,5 @@
 <% attachment_id = f.object.new_record? ? "new" : f.object.id %>
-<li id="<%="#{attachment_id}_image_details" %>">
+<li id="<%="#{attachment_id}_image_details" %>" class="attachment">
   <div class="attachment_thumbnail">
     <%= link_to image_tag(f.object.image.url(:thumb).to_s), f.object.image.url.to_s, :target => '_blank' %>
   </div>

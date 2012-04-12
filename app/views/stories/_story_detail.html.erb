@@ -199,7 +199,7 @@
     <div class="taskTableDiv">
       <div class="section">
         <div id="<%= "#{item_unique_id}_tasks_header" %>" class="header">
-          Tasks <span class="count">(<%= story.tasks.count %>)</span>
+          Tasks (<span class="count"><%= story.tasks.count %></span>)
         </div>
         <ol id="<%= "#{item_unique_id}_tasks" %>" class="task_list ui-sortable">
           <%= wi.fields_for :tasks do |task_builder| %>
@@ -219,7 +219,7 @@
     <div class="commentTableDiv">
       <div class="section">
         <div id="<%= "#{item_unique_id}_comments_header" %>" class="header">
-          Comments <span class="commentCount">(<%= story.comments.count %>)</span>
+          Comments (<span class="count"><%= story.comments.count %></span>)
         </div>
         <table class="commentsTable">
           <tbody id="<%= "#{item_unique_id}_comments" %>">
@@ -247,7 +247,7 @@
     <div class="attachmentWidget">
       <div class="section attachments">
         <div id="<%= "#{item_unique_id}_attachments_header" %>" class="header">
-          Attachments <span class="count">(<%= story.story_attachments.count %>)</span>
+          Attachments (<span class="count"><%= story.story_attachments.count %></span>)
         </div>
         <ol id="<%= "#{item_unique_id}_attachments_list" %>" class="attachments_list">
           <%= wi.fields_for :story_attachments do |story_attachment_builder| %>

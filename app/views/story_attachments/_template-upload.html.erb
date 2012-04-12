@@ -1,21 +1,23 @@
 <script id="template-upload" type="text/x-jquery-tmpl">
-  <tr class="template-upload{{if error}} ui-state-error{{/if}}">
-      <td class="preview"></td>
-      <td class="name">${name}</td>
-      <td class="size">${sizef}</td>
-      {{if error}}
-          <td class="error" colspan="2">Error:
-              {{if error === 'maxFileSize'}}File is too big
-              {{else error === 'minFileSize'}}File is too small
-              {{else error === 'acceptFileTypes'}}Filetype not allowed
-              {{else error === 'maxNumberOfFiles'}}Max number of files exceeded
-              {{else}}${error}
-              {{/if}}
-          </td>
-      {{else}}
-          <td class="progress"><div></div></td>
-          <td class="start"><button>Start</button></td>
-      {{/if}}
-      <td class="cancel"><button>Cancel</button></td>
-  </tr>
+  <div class="attachment">
+    <div class="attachment_thumbnail preview"></div>
+    <div class="attachment_details_container clearfix">
+      <ul class="attachment_details">
+        <li class="name">${name}</li>
+        {{if error}}
+        <li class="error template-upload{{if error}} ui-state-error{{/if}}">Error:
+          {{if error === 'maxFileSize'}}File is too big
+          {{else error === 'minFileSize'}}File is too small
+          {{else error === 'acceptFileTypes'}}Filetype not allowed
+          {{else error === 'maxNumberOfFiles'}}Max number of files exceeded
+          {{else}}${error}
+          {{/if}}
+        </li>
+        {{else}}
+        <li class="uploader">Uploaded by <%= current_user.display_name %></li>
+        <li class="metadata">${sizef}<span> on <%= Time.now.to_s(:pretty) %></span></li>
+        {{/if}}
+      </ul>
+    </div>
+  </div>
 </script>

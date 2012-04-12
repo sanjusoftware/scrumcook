@@ -194,6 +194,10 @@ body {
     height:100%; /* needed for container min-height */
 }
 
+.ui-widget {
+    font: 12px/16px "Lucida Grande", "Arial", sans-serif;
+}
+
 .container {
     height:auto !important; /* real browsers */
 	height:100%; /* IE6: treaded as min-height*/
