@@ -161,6 +161,11 @@ class Project < ActiveRecord::Base
     (start_date.to_date + ((sprint - 1) * sprint_length_in_days).days).beginning_of_day
   end
 
+  def next_priority_for(category)
+    max_priority = Story.maximum('priority', :group => 'category')[category]
+    max_priority.present? ? max_priority + 1 : 0
+  end
+
   private
 
   def sprint_commitment(sprint)

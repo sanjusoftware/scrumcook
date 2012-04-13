@@ -79,11 +79,6 @@ class Story < ActiveRecord::Base
     end
   end
 
-  def self.next_priority_for(category)
-    max_priority = Story.maximum('priority', :group => 'category')[category]
-    max_priority.present? ? max_priority + 1 : 0
-  end
-
   def self.types
     %w[Feature Bug Chore Epic]
   end
@@ -140,28 +135,8 @@ class Story < ActiveRecord::Base
     end
   end
 
-  def update_status_change_history
-    if changed_attributes["status"].present?
-      if self.not_yet_started?
-        add_history("un started this "+ self.type.downcase)
-      elsif self.started?
-        update_started_by
-      elsif self.finished?
-        update_finished_by
-      elsif self.delivered?
-        update_delivered_by
-      elsif self.accepted?
-        update_accepted_by
-      elsif self.rejected?
-        update_rejected_by
-      else
-        add_history(self.status " this "+ self.type.downcase)
-      end
-    end
-  end
-
   def increment_priorities_of_all_items_of_higher_priority
-    all_items_of_higher_priority = self.project.stories.where("priority > ? and category = ?", self.priority, self.category)
+    all_items_of_higher_priority = project.stories.where("priority > ? and category = ?", self.priority, self.category)
     all_items_of_higher_priority.each do |item|
       item.update_attributes!(:priority => (item.priority + 1))
     end
@@ -182,34 +157,29 @@ class Story < ActiveRecord::Base
   end
 
   def decrement_priorities_of_all_items_between_this_and_other_item(other_priority)
-    items_between_this_and_other = self.project.stories.where("priority > ? AND priority <= ? and category = ?", self.priority, other_priority, self.category)
+    items_between_this_and_other = project.stories.where("priority > ? AND priority <= ? and category = ?", self.priority, other_priority, self.category)
     items_between_this_and_other.each do |item|
       item.update_attributes!(:priority => (item.priority - 1))
     end
   end
 
   def increment_priorities_of_all_items_between_this_and_other_item(other_priority)
-    items_between_this_and_other = self.project.stories.where("priority < ? AND priority >= ? and category = ?", self.priority, other_priority, self.category)
+    items_between_this_and_other = project.stories.where("priority < ? AND priority >= ? and category = ?", self.priority, other_priority, self.category)
     items_between_this_and_other.each do |item|
       item.update_attributes!(:priority => (item.priority + 1))
     end
   end
 
   def increment_priorities_of_all_items_in_current
-    Story.where(:category => 'current').each do |item|
+    project.stories.where(:category => 'current').each do |item|
       item.update_attributes!(:priority => (item.priority + 1))
     end
   end
 
   def set_initial_default_values
-    if self.category.blank?
-      self.category = 'icebox'
-      self.priority = Story.next_priority_for("icebox")
-      self.save
-      add_history("created this "+ self.type.downcase)
-    else
-      add_history("imported this "+ self.type.downcase)
-    end
+    self.priority = project.next_priority_for(self.category)
+    self.save
+    add_history("created this "+ self.type.downcase)
   end
 
   def update_started_by
@@ -217,11 +187,14 @@ class Story < ActiveRecord::Base
     self.started_at = Time.now
     set_owner_as_current_user
     move_item_to_current_category unless self.category.eql? "current"
+    if epic.present? and !epic.started?
+      epic.start!
+    end
   end
 
   def move_item_to_current_category
     self.category = "current"
-    priority_to_set = Story.where(:category => 'current').minimum(:priority)
+    priority_to_set = project.stories.where(:category => 'current').minimum(:priority)
     if priority_to_set.present?
       increment_priorities_of_all_items_in_current
       self.priority = priority_to_set
@@ -234,29 +207,36 @@ class Story < ActiveRecord::Base
     add_history("finished this "+ self.type.downcase)
     self.finished_at = Time.now
     set_owner_as_current_user
+    if epic.present? and epic.all_stories_finished?
+      epic.finish!
+    end
   end
 
   def update_delivered_by
     add_history("delivered this "+ self.type.downcase)
     self.delivered_at = Time.now
     set_owner_as_current_user
+    if epic.present? and epic.all_stories_delivered?
+      epic.deliver!
+    end
   end
 
   def update_accepted_by
     add_history("accepted this "+ self.type.downcase)
     self.accepted_at = Time.now
     self.save!
+    if epic.present? and epic.all_stories_accepted?
+      epic.accept!
+    end
   end
 
   def update_rejected_by
     add_history("rejected this "+ self.type.downcase)
     self.rejected_at = Time.now
     self.save!
-  end
-
-  def update_restarted_by
-    add_history("restarted this "+ self.type.downcase)
-    set_owner_as_current_user
+    if epic.present? and epic.all_stories_rejected?
+      epic.reject!
+    end
   end
 
   def set_owner_as_current_user

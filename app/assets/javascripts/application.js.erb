@@ -255,21 +255,22 @@ function adjust_items_height() {
     });
 
     $(document).delegate(".story_estimate_select", "change", function() {
-        var id = $(this).attr('id');
-        if (id == -1) {
-            $("#" + id + "_image").attr({src: "<%= asset_path 'estimate-1pt.gif' %>"});
-        } else if (id == 0) {
-            $("#" + id + "_image").attr({src: "<%= asset_path 'estimate0pt.gif' %>"});
-        } else if (id == 1) {
-            $("#" + id + "_image").attr({src: "<%= asset_path 'estimate1pt.gif' %>"});
-        } else if (id == 2) {
-            $("#" + id + "_image").attr({src: "<%= asset_path 'estimate2pt.gif' %>"});
-        } else if (id == 3) {
-            $("#" + id + "_image").attr({src: "<%= asset_path 'estimate3pt.gif' %>"});
-        } else if (id == 5) {
-            $("#" + id + "_image").attr({src: "<%= asset_path 'estimate5pt.gif' %>"});
-        } else if (id == 8) {
-            $("#" + id + "_image").attr({src: "<%= asset_path 'estimate8pt.gif' %>"});
+        var estimation = $(this).attr('value');
+        var estimate_image = $(this).attr('id');
+        if (estimation == -1) {
+            $("#" + estimate_image + "_image").attr({src: "<%= asset_path 'estimate-1pt.gif' %>"});
+        } else if (estimation == 0) {
+            $("#" + estimate_image + "_image").attr({src: "<%= asset_path 'estimate0pt.gif' %>"});
+        } else if (estimation == 1) {
+            $("#" + estimate_image + "_image").attr({src: "<%= asset_path 'estimate1pt.gif' %>"});
+        } else if (estimation == 2) {
+            $("#" + estimate_image + "_image").attr({src: "<%= asset_path 'estimate2pt.gif' %>"});
+        } else if (estimation == 3) {
+            $("#" + estimate_image + "_image").attr({src: "<%= asset_path 'estimate3pt.gif' %>"});
+        } else if (estimation == 5) {
+            $("#" + estimate_image + "_image").attr({src: "<%= asset_path 'estimate5pt.gif' %>"});
+        } else if (estimation == 8) {
+            $("#" + estimate_image + "_image").attr({src: "<%= asset_path 'estimate8pt.gif' %>"});
         }
     });
 

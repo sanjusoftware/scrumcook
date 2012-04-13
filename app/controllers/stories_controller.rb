@@ -44,7 +44,6 @@ class StoriesController < ApplicationController
 
     respond_to do |format|
       if @story.update_attributes(params[@story.type.downcase])
-        @story.update_status_change_history
         @message = "#{@story.type} was updated"
         @story = Object.const_get(type).find(@story.id)
         format.js { render :template => 'stories/action_success' }
