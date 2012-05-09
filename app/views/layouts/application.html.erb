@@ -13,13 +13,13 @@
       //do not move this to application.js, otherwise all the non GET ajax request
       // will start resulting into a session logout because the WARNING: Can't verify CSRF token authenticity
       $(document).ajaxSend(
-              function(e, xhr, options) {
+              function (e, xhr, options) {
                   $(".ajax-loader").show();
                   var token = $("meta[name='csrf-token']").attr("content");
                   xhr.setRequestHeader("X-CSRF-Token", token);
-              }).ajaxComplete(function() {
-          $(".ajax-loader").hide();
-      });
+              }).ajaxComplete(function () {
+                  $(".ajax-loader").hide();
+              });
   </script>
 </head>
 <body>
@@ -43,10 +43,13 @@
             Welcome, <%= current_user.display_name %>
           </div>
           <ul class="nav_links">
-            <% %>
             <li><%= link_to "Dashboard", root_path, :class => (current_page?(root_path) ? 'current' : '') %></li>
-            <li><%= project = @project || current_user.projects.first
-                    link_to "Reports", reports_project_path(project), :class => (current_page?(reports_project_path(project)) ? 'current' : '') %></li>
+            <li>
+              <% project = @project || current_user.projects.first %>
+              <% if project.present? %>
+                  <%= link_to "Reports", reports_project_path(project), :class => (current_page?(reports_project_path(project)) ? 'current' : '') %>
+              <% end %>
+            </li>
             <li><a title="Coming Soon" href="#">Profile</a></li>
             <li><a title="Coming Soon" href="#">Help</a></li>
             <li><%= link_to 'Sign Out', destroy_user_session_path %></li>
@@ -64,7 +67,7 @@
     <% end %>
   </div>
   <div class="main">
-    <% auto_width = user_signed_in? && (current_page?(sprint_project_path(project)) || current_page?(project_path(project))) %>
+    <% auto_width = user_signed_in? && project.present? && (current_page?(sprint_project_path(project)) || current_page?(project_path(project))) %>
     <div class="<%= auto_width ? "content auto_width" : "content" %>">
       <%= yield %>
       <div class="clear"></div>
