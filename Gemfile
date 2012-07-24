@@ -13,7 +13,7 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
-gem 'pg'
+gem 'mysql2'
 gem 'devise'
 gem 'devise_invitable'
 gem 'aasm'
@@ -21,9 +21,10 @@ gem 'jquery-rails'
 gem "delayed_job", "~> 2.1.4"
 gem "kaminari"
 
-gem "best_in_place", :git => 'git://github.com/proton/best_in_place.git'
+gem "best_in_place", :git => 'https://github.com/bernat/best_in_place.git'
 gem 'mini_magick'
 gem 'carrierwave'
+gem 'capistrano'
 
 # Use unicorn as the web server
 # gem 'unicorn'

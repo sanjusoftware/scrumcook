@@ -1,9 +1,9 @@
 ActionMailer::Base.smtp_settings = {
     :address => "smtp.gmail.com",
     :port => 587,
-    :domain => "scrumkook.com",
-    :user_name => "sanjusoftware",
-    :password => "yourpassword",
+    :domain => "scrumcook.com",
+    :user_name => "support@scrumcook.com",
+    :password => "sanjusadhna",
     :authentication => "plain",
     :enable_starttls_auto => true
 }

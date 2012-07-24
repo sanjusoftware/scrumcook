@@ -71,7 +71,7 @@ ActiveRecord::Schema.define(:version => 20120405043401) do
   end
 
   create_table "stories", :force => true do |t|
-    t.text     "title",        :default => "As a <role>, I want <goal/desire> so that <benefit>"
+    t.text     "title"
     t.text     "description"
     t.integer  "requester"
     t.integer  "owner"
@@ -87,8 +87,8 @@ ActiveRecord::Schema.define(:version => 20120405043401) do
     t.datetime "delivered_at"
     t.datetime "accepted_at"
     t.datetime "rejected_at"
-    t.datetime "created_at",                                                                      :null => false
-    t.datetime "updated_at",                                                                      :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
   end
 
   add_index "stories", ["category"], :name => "index_workable_items_on_category"

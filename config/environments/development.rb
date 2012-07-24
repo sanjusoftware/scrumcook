@@ -40,7 +40,7 @@ Agiledme::Application.configure do
 
   # Just for the RubyMine IDE to get away from the segmentation fault error that I was getting.
   # Not required if you start the server form console
-  ENV['PATH'] = "/opt/local/bin:#{ENV['PATH']}"
+  #ENV['PATH'] = "/opt/local/bin:#{ENV['PATH']}"
 
 end
 
