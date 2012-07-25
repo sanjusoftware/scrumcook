@@ -1,10 +1,9 @@
 GIT
-  remote: https://github.com/bernat/best_in_place.git
-  revision: 2a61ccd51f0c3239b92ef1b65709ef1985c63bc4
+  remote: https://github.com/proton/best_in_place.git
+  revision: f101f00e20230c72ee681232b6440144d1ca2448
   specs:
-    best_in_place (1.1.2)
-      jquery-rails
-      rails (~> 3.1)
+    best_in_place (0.1.9)
+      rails (~> 3.0)
 
 GEM
   remote: http://rubygems.org/
