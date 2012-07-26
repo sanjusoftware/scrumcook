@@ -20,7 +20,8 @@ gem 'aasm'
 gem 'jquery-rails'
 gem "delayed_job", "~> 2.1.4"
 gem "kaminari"
-
+gem 'execjs'
+gem 'therubyracer'
 gem "best_in_place", :git => 'https://github.com/proton/best_in_place.git'
 gem 'mini_magick'
 gem 'carrierwave'
