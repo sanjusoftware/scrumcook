@@ -35,6 +35,8 @@ role :db,  "dev-utility-lx38.amdc.mckinsey.com", :primary => true # This is wher
 # end
 
 # tasks
+
+
 namespace :deploy do
   task :migrate do
     run "cd #{current_path}; /usr/bin/rake migrate environment=production"
@@ -48,13 +50,16 @@ namespace :deploy do
   desc "Symlink shared configs and folders on each release."
   task :symlink_shared do
     run "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
-    #run "ln -nfs #{shared_path}/assets #{release_path}/public/assets"
   end
 
   #desc "Sync the public/assets directory."
   #task :assets do
   #  system "rsync -vr --exclude='.DS_Store' public/assets #{user}@#{application}:#{shared_path}/"
   #end
+
+  task :pipeline_precompile do
+    run "cd #{release_path}; RAILS_ENV=production bundle exec rake assets:precompile --trace"
+  end
 
   desc "install the necessary prerequisites"
   task :bundle_install, :roles => :app do
@@ -64,4 +69,5 @@ namespace :deploy do
 end
 
 after 'deploy:update_code', 'deploy:symlink_shared'
+after 'deploy:update_code', 'deploy:pipeline_precompile'
 #after 'deploy:update_code', 'deploy:migrate'
